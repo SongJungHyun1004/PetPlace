@@ -1,0 +1,65 @@
+jwt:
+  secret: MyVeryLongAndSecureJwtSecretKeyForPetPlaceApplicationThatIsAtLeast64BytesLongToEnsureHS512SecurityStandards
+  access-token-expiry: 10800000      # Access Token: 3시간
+  refresh-token-expiry: 604800000   # Refresh Token: 7일
+  temp-expiration-time: 900000  # 15분 (새로 추가)
+
+# 소셜 로그인 설정
+social:
+  kakao:
+    client-id: 1287717
+    client-secret: hhjuguO5EVXMj4nLW7NMy7Q7vXSY6ZWd
+    redirect-uri: http://localhost:8080/auth/kakao/callback
+
+
+
+spring:
+  security:
+    user:
+      name: user
+      password: ssafy123
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  web:
+    resources:
+      static-locations: file:/home/ubuntu/upload/images/
+  datasource:
+    url: jdbc:mysql://localhost:3306/petplace_local?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: ssafy
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8081
+
+portone:
+  api-key: 7058178427733754
+  secret-key: EFYssJy7k7R6idJMXlzk0a8gBVli5IlF3YDA4OPRAYc2uvijEVUkutHag3eoxJnuVwSk4rY40oqNLOJP
+  store-id: imp12345678
+  channel-key: channel-key-4119addf-eaf2-458d-b982-aa2543bd6584
+  base-url: https://api.iamport.kr
+  webhook:
+    secret: whsec_N4qlVumCRFHLd0Z3k5udwJkTceDful//o0r0iCARUtg=
+  v2:
+    base-url: https://api.portone.io
+    api-token: 1RKZ2Er5gjsTda1TrV2e5iQ0wFYSKlNDoRLp8Pj3j4JMYPkKYjkYhhCEPFLVX7gXYUfqnIOG2X54i6MM
+
+logging:
+  level:
+    com.minjeok4go.petplace.auth: DEBUG
+    root: INFO
+
+ai:
+  similarity:
+    base-url: http://localhost:8083
+service:
+  internal-token: test-internal-token

@@ -1,0 +1,104 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8
+    restart: always
+    container_name: my-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  redis:
+    image: redis:7
+    container_name: my-redis
+    ports:
+      - "${REDIS_PORT}:6379"
+    # 비밀번호를 쓰려면 아래 주석 해제
+    # command: ["redis-server", "--appendonly", "yes", "--requirepass", "${REDIS_PASSWORD}"]
+    restart: always
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring-app
+    depends_on:
+      - db
+      - redis
+    environment:
+      # --- MySQL ---
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${MYSQL_DATABASE}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+
+      # --- Logging ---
+      LOGGING_LEVEL_ROOT: ${LOGGING_LEVEL_ROOT}
+      LOGGING_LEVEL_ORG_HIBERNATE_SQL: ${LOGGING_LEVEL_ORG_HIBERNATE_SQL}
+      LOGGING_LEVEL_ORG_HIBERNATE_TYPE_DESCRIPTOR_SQL: ${LOGGING_LEVEL_ORG_HIBERNATE_TYPE_DESCRIPTOR_SQL}
+
+      # --- File Upload ---
+      SPRING_WEB_RESOURCES_STATIC_LOCATIONS: ${STATIC_IMAGE_LOCATION}
+      SPRING_MVC_STATIC_PATH_PATTERN: /images/**
+      APP_UPLOAD_BASE: ${APP_UPLOAD_BASE}
+
+      # --- Internal Service Token ---
+      SERVICE_INTERNAL_TOKEN: ${SERVICE_INTERNAL_TOKEN}
+
+      # --- Redis ---
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      # SPRING_DATA_REDIS_PASSWORD: ${REDIS_PASSWORD}
+
+      # --- JWT ---
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+
+      # --- PortOne ---
+      PORTONE_API_KEY: ${PORTONE_API_KEY}
+      PORTONE_SECRET_KEY: ${PORTONE_SECRET_KEY}
+      PORTONE_STORE_ID: ${PORTONE_STORE_ID}
+      PORTONE_IMP_CODE: ${PORTONE_IMP_CODE}
+      PORTONE_WEBHOOK_SECRET: ${PORTONE_WEBHOOK_SECRET}
+      PORTONE_V2_API_TOKEN: ${PORTONE_V2_API_TOKEN}
+
+      # --- Kakao (옵션) ---
+      KAKAO_CLIENT_ID: ${KAKAO_CLIENT_ID}
+      KAKAO_CLIENT_SECRET: ${KAKAO_CLIENT_SECRET}
+      KAKAO_REDIRECT_URI: ${KAKAO_REDIRECT_URI}
+
+    volumes:
+      - ${UPLOAD_PATH_HOST}:${UPLOAD_PATH_CONTAINER}:rw
+    ports:
+      - "${APP_PORT}:8081"
+    restart: always
+
+  similarity:
+    build:
+      context: ./similarity
+      dockerfile: Dockerfile
+    container_name: similarity
+    command: [ "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8083", "--workers", "1" ]
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Seoul
+      - USE_SERVER_YOLO=${USE_SERVER_YOLO}
+      - EMBED_BACKBONE=${EMBED_BACKBONE}
+      - EMBED_PRETRAIN=${EMBED_PRETRAIN}
+      - W_FACE=${W_FACE}
+      - INDEX_DIR=/app/index_data
+      - SERVICE_INTERNAL_TOKEN=${SERVICE_INTERNAL_TOKEN}
+    volumes:
+      - ${UPLOAD_PATH_HOST}:${UPLOAD_PATH_CONTAINER}:ro
+      - similarity_index:/app/index_data
+    expose:
+      - "8083"
+
+volumes:
+  mysql_data:
+  similarity_index:

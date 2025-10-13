@@ -1,0 +1,91 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.minjeok4go'
+version = '0.1.1-SNAPSHOT_ver_0_0_2'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // --- Spring Boot 기본 ---
+    implementation 'org.springframework.boot:spring-boot-starter-web'           // 웹, REST API
+    implementation 'org.springframework.boot:spring-boot-starter-security'      // 인증/인가(JWT, OAuth2 등)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'      // JPA, ORM, DB 연동
+    implementation 'org.springframework.boot:spring-boot-starter-validation'    // 입력값 검증(@Valid 등)
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'     // 실시간 채팅(WebSocket)
+    implementation 'org.springframework.boot:spring-boot-starter-mail'          // 이메일 전송(JavaMailSender)
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // 소셜 로그인(OAuth2 Client)
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'     // 테스트용 템플릿 엔진
+    implementation platform("org.springframework.boot:spring-boot-dependencies:3.5.4")
+    // --- 데이터베이스 ---
+    runtimeOnly 'com.mysql:mysql-connector-j'                                   // MySQL JDBC 드라이버
+
+    // --- 개발 편의 ---
+    compileOnly 'org.projectlombok:lombok'                                      // 롬북(코드 자동화: getter/setter 등)
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    annotationProcessor 'org.projectlombok:lombok'                              // 롬북(Annotation 처리)
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'             // 개발용 자동 재시작, 핫스왑 등
+
+    // --- API 문서화(Swagger/OpenAPI) ---
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'   // Spring Boot 3.5+ 호환 버전
+
+    // --- JSON 파싱(Jackson) ---
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310' // (LocalDateTime 등 지원)
+
+    // JWT 라이브러리
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // --- 테스트 ---
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'       // 스프링 테스트 기본
+    testImplementation 'org.springframework.security:spring-security-test'        // 시큐리티 테스트 지원
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'                 // JUnit5 테스트 런처
+    testRuntimeOnly 'com.h2database:h2'
+
+    // 포트원 연동을 위한 WebClient (webflux 스타터 대신 개별 의존성 사용)
+    implementation 'org.springframework:spring-webflux'
+    implementation 'io.projectreactor.netty:reactor-netty-http'
+
+    // REDIS
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // FCM (Firebase Cloud Messaging) - 푸시 알림
+    implementation("com.google.firebase:firebase-admin:9.3.0")
+
+    //포트원 카카오페이 연동을 위한
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'com.github.ben-manes.caffeine:caffeine'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+    implementation 'org.apache.httpcomponents.client5:httpclient5'
+
+    // 공간 데이터(도형) 처리를 위한 JTS 라이브러리
+    implementation 'org.locationtech.jts:jts-core:1.19.0'
+
+    // ✅ [추가] Hibernate가 공간 데이터를 처리할 수 있도록 도와주는 라이브러리
+    implementation 'org.hibernate.orm:hibernate-spatial:6.5.2.Final'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

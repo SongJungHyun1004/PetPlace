@@ -1,0 +1,87 @@
+jwt:
+  secret: ${JWT_SECRET_KEY}
+  access-token-expiry: 10800000      # Access Token: 1시간
+  refresh-token-expiry: 604800000   # Refresh Token: 7일
+  temp-expiration-time: 900000  # 15분 (새로 추가)
+
+# 소셜 로그인 설정
+social:
+  kakao:
+    client-id: ${KAKAO_CLIENT_ID}
+    client-secret: ${KAKAO_CLIENT_SECRET}
+    redirect-uri: ${KAKAO_REDIRECT_URI}
+
+
+spring:
+  security:
+    user:
+      name: user
+      password: ssafy123
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  web:
+    resources:
+#      static-locations: file:/home/ubuntu/upload/images/
+      static-locations: file:/data/images/
+
+      cache:
+        cachecontrol:
+          cache-public: true
+          max-age: 30d
+  mvc:
+    static-path-pattern: /images/**
+  datasource:
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:127.0.0.1}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
+
+server:
+  port: 8081
+
+portone:
+  api-key: ${PORTONE_API_KEY}
+  secret-key: ${PORTONE_SECRET_KEY}
+  imp-code: ${PORTONE_IMP_CODE}
+  store-id: ${PORTONE_STORE_ID}
+  channel-key: channel-key-680df6ca-d2e7-4c93-9a7c-bae25c42e559
+  base-url: https://api.iamport.kr
+  webhook:
+    secret: ${PORTONE_WEBHOOK_SECRET}
+  v2:
+    base-url: https://api.portone.io
+    api-token: ${PORTONE_V2_API_TOKEN}
+
+
+logging:
+  level:
+    com.minjeok4go.petplace.auth: DEBUG
+    root: INFO
+
+ai:
+  similarity:
+    base-url: http://similarity:8083    # compose 서비스명:포트
+    connect-timeout-ms: 3000
+    read-timeout-ms: 15000
+
+app:
+  upload:
+    base: /data/images
+    lost-pets: ${app.upload.base}/lost_pets_images
+    sightings: ${app.upload.base}/sighting_images
+
+service:
+  internal-token: ${SERVICE_INTERNAL_TOKEN:}  # 내부 토큰
