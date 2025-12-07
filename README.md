@@ -29,13 +29,13 @@
 
 ![image](docu/webp/_MConverter.eu_feed.webp){height=430}
 ![image](docu/webp/_MConverter.eu_KakaoTalk_20250902_153732630.webp){height=430}
-![KakaoTalk_20250902_171833606_17](/uploads/2047aee94edc74326cf9e393470c6223/KakaoTalk_20250902_171833606_17.png){width=200}
+![KakaoTalk_20250902_171833606_17](docu/webp/KakaoTalk_20250902_171833606_17.png){width=200}
 
 # 우리동네 페이지
 - 바텀시트 구현
 - 카카오맵 API 연동하여 위치 마커 표시
 
-![Screenshot_20250815_144836_PetPlace](/uploads/2b39eb000e9bca5d70baa5c41d660838/Screenshot_20250815_144836_PetPlace.jpg){height=430}
+![Screenshot_20250815_144836_PetPlace](docu/webp/Screenshot_20250815_144836_PetPlace.jpg){height=430}
 
 # 산책/돌봄 페이지
 - 게시판 리스트 구현 
@@ -50,7 +50,7 @@
 - 실종매칭 FCM 알람 연동 
 
 ![image](docu/webp/missingregister.webp){height=430}
-![KakaoTalk_20250902_171833606_15](/uploads/5eae799fe44e33da2b7e62da220aae36/KakaoTalk_20250902_171833606_15.png){height=430}
+![KakaoTalk_20250902_171833606_15](docu/webp/KakaoTalk_20250902_171833606_15.png){height=430}
 ![image](docu/webp/matching.webp){height=430}
 
 # 채팅페이지
@@ -71,21 +71,21 @@
 [![Video Title](https://img.youtube.com/vi/vrb4LYhehxQ/0.jpg){width=800 height=430}](https://www.youtube.com/watch?v=vrb4LYhehxQ)
 
 # 시스템 아키텍처
-![PetPlace__5_](/uploads/5dedbe523d47b1b143a2201ba65bce6a/PetPlace__5_.png)
+![PetPlace__5_](docu/webp/PetPlace아키텍처.png)
 
 # ERD
-![PetPlace__5_](/uploads/897c8dbc3c2a8e99a5c8609ade7e396b/Untitled.png)
+![PetPlace__5_](docu/webp/PetPlace_ERD.png)
 
 # Role
 |오승연|김민|조경호|
 |:---:|:---:|:---:|
 |모바일|백엔드|인프라, AI|
-|[![승연이](/uploads/96a13d572f9e5c689e8fa39f1affb135/승연이.png){width=150 height=150}](https://github.com/syeony)|[![민](/uploads/11c40ffb37c999fe40a139ae2c7686af/민.jpg){width=150 height=150}](https://github.com/ZeppIine)|[![경호](/uploads/9f62ef8e28045eb96a9416ea33a6c05e/경호.png){width=150 height=150}](https://github.com/Alien-kh)
+|[![승연이](docu/webp/승연이.png){width=150 height=150}](https://github.com/syeony)|[![민](docu/webp/민.jpg){width=150 height=150}](https://github.com/ZeppIine)|[![경호](docu/webp/경호.png){width=150 height=150}](https://github.com/Alien-kh)
 
 |이도형|송정현|정유진|
 |:---:|:---:|:---:|
 |모바일|모바일|백엔드|
-|![도형](/uploads/0fc4ce481b0985a8e254a7b1501935a6/도형.png){width=150 height=150}|![정현](/uploads/e87defba9f4ca6ed07dbb3dccfe9ec6c/정현.png){width=150 height=150}|![유진](/uploads/f16612d09b1dc1a104ee90f4e6161d9f/유진.png){width=150 height=150}|
+|![도형](docu/webp/도형.png){width=150 height=150}|![정현](docu/webp/정현.png){width=150 height=150}|![유진](docu/webp/유진.png){width=150 height=150}|
 
 # 상세 역할분담
 
